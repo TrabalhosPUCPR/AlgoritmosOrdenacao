@@ -1,16 +1,16 @@
 import java.util.Random;
 
 public abstract class etc {
-    public static int[] criarArray(int tamanho, int n_max){
+    public static Integer[] criarArray(int tamanho, int n_max){
         Random gerador = new Random();
-        int[] array = new int[tamanho];
+        Integer[] array = new Integer[tamanho];
         for(int i = 0; tamanho > i; i++){
             array[i] = gerador.nextInt(n_max);
         }
         return array;
     }
 
-    public static int[] invertArray(int[] array){
+    public static Integer[] invertArray(Integer[] array){
         for(int i = 0; i < array.length/2; i++){
             int temp = array[i];
             array[i] = array[array.length - i - 1];
@@ -19,7 +19,7 @@ public abstract class etc {
         return array;
     }
 
-    public static int[] deixarQuaseOrdenado(int[] array){
+    public static Integer[] deixarQuaseOrdenado(Integer[] array){
         Random gerador = new Random();
         int qntdPraEmbaralhar = (int)(array.length*0.2);
         while(qntdPraEmbaralhar >= 0){
