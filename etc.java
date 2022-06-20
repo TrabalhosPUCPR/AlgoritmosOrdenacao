@@ -38,7 +38,7 @@ public abstract class etc {
         etc.start = System.currentTimeMillis();
     }
     public static float pararCronometro(){
-        return (System.currentTimeMillis() - start) / 100F;
+        return (System.currentTimeMillis() - etc.start) / 100F;
     }
 
     public static void printArray(int[] array){

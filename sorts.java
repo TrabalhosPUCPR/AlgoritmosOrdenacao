@@ -1,12 +1,13 @@
 public class sorts {
     public static void main(String[] args) throws Exception {
 
-        int tamanhoDoConjunto = 100_000; // stack overflow garantido nos ~50.000 quando o quicksort ta ordenando um array descrescente
+        int tamanhoDoConjunto = 10_000; // stack overflow garantido nos ~50.000 quando o quicksort ta ordenando um array descrescente
 
         Integer[] arrayDesordenado = etc.criarArray(tamanhoDoConjunto, 10000);
 
         //Integer[] testeOrdenado = quicksort(arrayDesordenado.clone(), 0, arrayDesordenado.length-1);
         //Integer[] testeOrdenado = shellsort(arrayDesordenado.clone());
+        //Integer[] testeOrdenado = heapsort(arrayDesordenado.clone());
 
         // QUICK SORT
         String[] temposQuickSort = new String[3];
@@ -35,7 +36,6 @@ public class sorts {
             temposQuickSort[2] = "StackOverflow";
             System.out.println("QuickSort: overflow!");
         }
-        //etc.printArray(quicksort(array, 0, array.length-1));
 
         // SHELL SORT 
         System.out.println("ShellSort: array desordenado...");
@@ -59,6 +59,22 @@ public class sorts {
 
         //HEAP SORT
         String[] temposHeapSort = new String[3];
+        System.out.println("HeapSort: array desordenado...");
+        etc.comecarCronometro();
+        heapsort(arrayDesordenado.clone());
+        temposHeapSort[0] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("HeapSort: pronto");
+
+        System.out.println("HeapSort: array quase ordenado...");
+        etc.comecarCronometro();
+        heapsort(arrayQuaseOrdenado.clone());
+        temposHeapSort[1] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("HeapSort: pronto");
+
+        System.out.println("HeapSort: array decrescente...");
+        etc.comecarCronometro();
+        heapsort(arrayDescrecente.clone());
+        temposHeapSort[2] = String.valueOf(etc.pararCronometro()) + " s";
         
         // eu n to com vontade de fazer uma tabela dinamica, entao vai ficar assim
         System.out.println("");
@@ -75,6 +91,32 @@ public class sorts {
         System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
         System.out.print("|");     System.out.print(etc.verTamMax_table("HeapSort", 15));     System.out.print("|");     System.out.print(etc.verTamMax_table(temposHeapSort[0], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposHeapSort[1], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposHeapSort[2], 15));     System.out.println("|");
         System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
+    }
+
+    public static Integer[] heapsort(Integer arr[]){
+        int n = arr.length;
+        for (int i = n / 2 - 1; i >= 0; i--) heapify(arr, n, i);
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            heapify(arr, i, 0);
+        }
+        return arr;
+    }
+  
+    private static void heapify(Integer arr[], int n, int i){
+        int largest = i; 
+        int l = 2 * i + 1; 
+        int r = 2 * i + 2; 
+        if (l < n && arr[l] > arr[largest]) largest = l;
+        if (r < n && arr[r] > arr[largest]) largest = r;
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+            heapify(arr, n, largest);
+        }
     }
 
     public static Integer[] shellsort(Integer[] A){
