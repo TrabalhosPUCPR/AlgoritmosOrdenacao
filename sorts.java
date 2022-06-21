@@ -1,13 +1,18 @@
 public class sorts {
     public static void main(String[] args) throws Exception {
 
-        int tamanhoDoConjunto = 10_000; // stack overflow garantido nos ~50.000 quando o quicksort ta ordenando um array descrescente
+        int tamanhoDoConjunto = 10_000;
+        // stack overflow garantido nos ~50.000 quando o quicksort ta ordenando um array descrescente
+        // bogo sort demora quase 10 segundos pra ordena um array com 10 elementos
 
-        Integer[] arrayDesordenado = etc.criarArray(tamanhoDoConjunto, 10000);
+        Integer[] arrayDesordenado = etc.criarArray(tamanhoDoConjunto, 10_000);
 
         //Integer[] testeOrdenado = quicksort(arrayDesordenado.clone(), 0, arrayDesordenado.length-1);
         //Integer[] testeOrdenado = shellsort(arrayDesordenado.clone());
         //Integer[] testeOrdenado = heapsort(arrayDesordenado.clone());
+        //Integer[] testeOrdenado = selectionsort(arrayDesordenado.clone());
+        //Integer[] testeOrdenado = combsort(arrayDesordenado.clone());
+        //Integer[] testeOrdenado = bogosort(arrayDesordenado.clone(), 25);
 
         // QUICK SORT
         String[] temposQuickSort = new String[3];
@@ -75,7 +80,75 @@ public class sorts {
         etc.comecarCronometro();
         heapsort(arrayDescrecente.clone());
         temposHeapSort[2] = String.valueOf(etc.pararCronometro()) + " s";
-        
+        System.out.println("HeapSort: pronto");
+
+        //SELECTION SORT
+        String[] temposSelectionSort = new String[3];
+        System.out.println("SelectionSort: array desordenado...");
+        etc.comecarCronometro();
+        selectionsort(arrayDesordenado.clone());
+        temposSelectionSort[0] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("SelectionSort: pronto");
+
+        System.out.println("SelectionSort: array quase ordenado...");
+        etc.comecarCronometro();
+        selectionsort(arrayQuaseOrdenado.clone());
+        temposSelectionSort[1] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("SelectionSort: pronto");
+
+        System.out.println("SelectionSort: array decrescente...");
+        etc.comecarCronometro();
+        selectionsort(arrayDescrecente.clone());
+        temposSelectionSort[2] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("SelectionSort: pronto");
+
+        // COMB SORT
+        String[] temposCombSort = new String[3];
+        System.out.println("CombSort: array desordenado...");
+        etc.comecarCronometro();
+        combsort(arrayDesordenado.clone());
+        temposCombSort[0] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("CombSort: pronto");
+
+        System.out.println("CombSort: array quase ordenado...");
+        etc.comecarCronometro();
+        combsort(arrayQuaseOrdenado.clone());
+        temposCombSort[1] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("CombSort: pronto");
+
+        System.out.println("CombSort: array decrescente...");
+        etc.comecarCronometro();
+        combsort(arrayDescrecente.clone());
+        temposCombSort[2] = String.valueOf(etc.pararCronometro()) + " s";
+        System.out.println("CombSort: pronto");
+
+         // BOGO SORT 
+         // esse algoritmo e terrivel, mas com MUITA MUITA MUITA MUITA SORTE, ele gera um array ordenado aleatoriamente bem rapido, mas a chance disso acontecer ate num array com tamanho 100 ja e muito baixo
+         // o nome representa o algoritmo mt bem
+         // a funcao tem um parametro a mais, que e o tempo maximo pra deixar o bogo sort rodando
+         int tempoMaximo = 25;
+         String[] temposBogoSort = new String[3];
+         System.out.println("BogoSort: array desordenado...");
+         etc.comecarCronometro();
+         bogosort(arrayDesordenado.clone(), tempoMaximo);
+         if(etc.pararCronometro() >= tempoMaximo) temposBogoSort[0] = "MuitoTempo";
+         else temposBogoSort[0] = String.valueOf(etc.pararCronometro()) + " s";
+         System.out.println("BogoSort: pronto");
+ 
+         System.out.println("BogoSort: array quase ordenado...");
+         etc.comecarCronometro();
+         bogosort(arrayQuaseOrdenado.clone(), tempoMaximo);
+         if(etc.pararCronometro() >= tempoMaximo) temposBogoSort[1] = "MuitoTempo";
+         else temposBogoSort[1] = String.valueOf(etc.pararCronometro()) + " s";
+         System.out.println("BogoSort: pronto");
+ 
+         System.out.println("BogoSort: array decrescente...");
+         etc.comecarCronometro();
+         bogosort(arrayDescrecente.clone(), tempoMaximo);
+         if(etc.pararCronometro() >= tempoMaximo) temposBogoSort[2] = "MuitoTempo";
+         else temposBogoSort[2] = String.valueOf(etc.pararCronometro()) + " s";
+         System.out.println("BogoSort: pronto");
+
         // eu n to com vontade de fazer uma tabela dinamica, entao vai ficar assim
         System.out.println("");
         System.out.println("_".repeat(65));
@@ -91,7 +164,68 @@ public class sorts {
         System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
         System.out.print("|");     System.out.print(etc.verTamMax_table("HeapSort", 15));     System.out.print("|");     System.out.print(etc.verTamMax_table(temposHeapSort[0], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposHeapSort[1], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposHeapSort[2], 15));     System.out.println("|");
         System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
+        System.out.print("|");     System.out.print(etc.verTamMax_table("SelectionSort", 15));     System.out.print("|");     System.out.print(etc.verTamMax_table(temposSelectionSort[0], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposSelectionSort[1], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposSelectionSort[2], 15));     System.out.println("|");
+        System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
+        System.out.print("|");     System.out.print(etc.verTamMax_table("CombSort", 15));     System.out.print("|");     System.out.print(etc.verTamMax_table(temposCombSort[0], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposCombSort[1], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposCombSort[2], 15));     System.out.println("|");
+        System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
+        System.out.print("|");     System.out.print(etc.verTamMax_table("BogoSort", 15));     System.out.print("|");     System.out.print(etc.verTamMax_table(temposBogoSort[0], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposBogoSort[1], 15));     System.out.print("|");      System.out.print(etc.verTamMax_table(temposBogoSort[2], 15));     System.out.println("|");
+        System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");     System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.print("|");      System.out.print("_".repeat(15));     System.out.println("|");
     }
+
+    public static Integer[] bogosort(Integer[] arr, int tempo){
+        long start = System.currentTimeMillis();
+        while(!isSorted(arr) && (System.currentTimeMillis() - start) / 100F <= tempo){
+            etc.embaralhar(arr);
+        }
+        return arr;
+    }
+    private static boolean isSorted(Integer[] arr){
+        for(int i = 1; i < arr.length; i++){
+            if(arr[i - 1] > arr[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static Integer[] combsort(Integer[] arr) {
+        int n = arr.length;
+        int gap = n;
+        boolean swapped = true;
+        while (gap != 1 || swapped == true) {
+            gap = getNextGap(gap);
+            swapped = false;
+            for (int i = 0; i < n - gap; i++) {
+                if (arr[i] > arr[i + gap]) {
+                    int temp = arr[i];
+                    arr[i] = arr[i + gap];
+                    arr[i + gap] = temp;
+                    swapped = true;
+                }
+            }
+        }
+        return arr;
+    }
+    static int getNextGap(int gap) {
+        gap = (gap * 10) / 13;
+        if (gap < 1)
+            return 1;
+        return gap;
+    }
+
+    public static Integer[] selectionsort(Integer[] arr){
+        for(int i = 0; i< arr.length; i++){
+            for(int j= i + 1; j < arr.length; j++){
+                if(arr[i] > arr[j]){
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
 
     public static Integer[] heapsort(Integer arr[]){
         int n = arr.length;
@@ -104,7 +238,6 @@ public class sorts {
         }
         return arr;
     }
-  
     private static void heapify(Integer arr[], int n, int i){
         int largest = i; 
         int l = 2 * i + 1; 
@@ -118,6 +251,7 @@ public class sorts {
             heapify(arr, n, largest);
         }
     }
+
 
     public static Integer[] shellsort(Integer[] A){
         for(int gap = A.length/2; gap > 0; gap /= 2){
@@ -134,6 +268,7 @@ public class sorts {
         return A;
     }
 
+
     public static Integer[] quicksort(Integer[] A, int low, int high){
         if(low >= 0 && high >=0 && low < high){
             int P = partition(A, low, high);
@@ -142,7 +277,6 @@ public class sorts {
         }
         return A;
     }
-
     public static Integer partition(Integer[] A, int low, int high){
         int pivot = A[high];
         int i = low - 1;

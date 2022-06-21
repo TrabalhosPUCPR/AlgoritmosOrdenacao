@@ -19,7 +19,18 @@ public abstract class etc {
         return array;
     }
 
-    public static Integer[] deixarQuaseOrdenado(Integer[] array){
+    public static Integer[] embaralhar(Integer[] array){
+        Random gerador = new Random();
+        for(int i = 0; i < array.length; i++){
+            int j = gerador.nextInt(array.length);
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    }
+
+    public static Integer[] deixarQuaseOrdenado(Integer[] array){ // embaralha 20% dos elementos dentro do array
         Random gerador = new Random();
         int qntdPraEmbaralhar = (int)(array.length*0.2);
         while(qntdPraEmbaralhar >= 0){
