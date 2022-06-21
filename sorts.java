@@ -1,7 +1,7 @@
 public class sorts {
     public static void main(String[] args) throws Exception {
 
-        int tamanhoDoConjunto = 10_000;
+        int tamanhoDoConjunto = 50_000;
         // stack overflow garantido nos ~50.000 quando o quicksort ta ordenando um array descrescente
         // bogo sort demora normalmente 10 segundos pra ordena um array com 10 elementos...
 

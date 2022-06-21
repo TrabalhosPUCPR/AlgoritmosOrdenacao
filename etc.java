@@ -32,7 +32,7 @@ public abstract class etc {
 
     public static Integer[] deixarQuaseOrdenado(Integer[] array){ // embaralha 20% dos elementos dentro do array
         Random gerador = new Random();
-        int qntdPraEmbaralhar = (int)(array.length*0.2);
+        int qntdPraEmbaralhar = (int)(array.length*0.1);
         while(qntdPraEmbaralhar >= 0){
             int pos1 = gerador.nextInt(array.length);
             int pos2 = gerador.nextInt(array.length);
