@@ -3,7 +3,7 @@ public class sorts {
 
         int tamanhoDoConjunto = 10_000;
         // stack overflow garantido nos ~50.000 quando o quicksort ta ordenando um array descrescente
-        // bogo sort demora quase 10 segundos pra ordena um array com 10 elementos
+        // bogo sort demora normalmente 10 segundos pra ordena um array com 10 elementos...
 
         Integer[] arrayDesordenado = etc.criarArray(tamanhoDoConjunto, 10_000);
 
